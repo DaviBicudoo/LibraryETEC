@@ -1,110 +1,90 @@
 <?php
 
-use App\Controller\{
-    AlunoController,
-    InicialController,
-    LoginController,
-    AutorController,
-    CategoriaController,
-    LivroController,
-    EmprestimoController
-};
+    use LibraryETEC\Controller\
+    {
+        AlunoController,
+        AutorController,
+        CategoriaController,
+        EmprestimoController,
+        InicialController,
+        LivroController,
+        LoginController
+    };
 
-$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-switch($url)
-{
-    case '/':
-        InicialController::index();
-    break;
+    switch($url)
+    {
+        case '/':
+            InicialController::index();
+        break;
 
-    /**
-     * Rotas para Login
-     */
-    case '/login':
-        LoginController::index();
-    break;
+        case '/login':
+            LoginController::index();
+        break;
 
-    case '/logout':
-        LoginController::logout();
-    break;
+        case '/logout':
+            InicialController::logout();
+        break;
 
-    /**
-     * Rotas para alunos
-     */
-    case '/aluno':
-        AlunoController::index();
-    break;
+        case '/aluno':
+            AlunoController::index();
+        break;
 
-    case '/aluno/cadastro':
-        AlunoController::cadastro();
-    break;
+        case '/aluno/cadastro':
+            AlunoController::cadastro();
+        break;
 
-    case '/aluno/delete':
-        AlunoController::delete();
-    break;
+        case '/aluno/delete':
+            AlunoController::delete();
+        break;
 
-    /**
-     * Rotas para autores
-     */
+        case '/autor':
+            AutorController::index();
+        break;
 
-    case '/autor':
-        AutorController::index();
-    break;
+        case '/autor/cadastro':
+            AutorController::cadastro();
+        break;
 
-    case '/autor/cadastro':
-        AutorController::cadastro();
-    break;
+        case '/autor/delete':
+            AutorController::delete();
+        break;
 
-    case '/autor/delete':
-        AlunoController::delete();
-    break;
+        case '/categoria':
+            CategoriaController::index();
+        break;
 
-    /**
-     * Rotas para categorias
-     */    
+        case '/categoria/cadastro':
+            CategoriaController::cadastro();
+        break;
 
-    case '/categoria':
-        CategoriaController::index();
-    break;
+        case '/categoria/delete':
+            CategoriaController::delete();
+        break;
 
-    case '/categoria/cadastro':
-        CategoriaController::cadastro();
-    break;
+        case '/livro':
+            LivroController::index();
+        break;
 
-    case '/categoria/delete':
-        CategoriaController::delete();
-    break;
+        case '/livro/cadastro':
+            LivroController::cadastro();
+        break;
 
-    /**
-     * Rotas para livros
-     */
+        case '/livro/delete':
+            LivroController::delete();
+        break;
 
-     case '/livro':
-        LivroController::index();
-    break;
+        case '/emprestimo':
+            EmprestimoController::index();
+        break;
 
-    case '/livro/cadastro':
-        LivroController::cadastro();
-    break;
+        case '/emprestimo/cadastro':
+            EmprestimoController::cadastro();
+        break;
 
-    case '/livro/delete':
-        LivroController::delete();
-    break;
-
-    /**
-     * Rotas para emprestimo
-     */
-
-    case "/emprestimo":
-        EmprestimoController::index();
-    break;
-
-    case "/emprestimo/cadastro":
-        EmprestimoController::cadastro();
-    break;
-
-    case "/emprestimo/delete":
-        EmprestimoController::delete();
-    break;
-}
+        case '/emprestimo/delete':
+            EmprestimoController::delete();
+        break;
+    }
+?>
