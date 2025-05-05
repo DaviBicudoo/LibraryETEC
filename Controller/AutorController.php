@@ -1,7 +1,7 @@
 <?php
     namespace LibraryETEC\Controller;
 
-    use PHPappMVCi\Model\Autor;
+    use LibraryETEC\Model\Autor;
     use Exception;
 
     final class AutorConrtoller extends Controller

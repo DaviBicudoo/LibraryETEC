@@ -1,7 +1,7 @@
 <?php
     namespace LibraryETEC\Controller;
 
-    use PHPappMVCi\Model\Categoria;
+    use LibraryETEC\Model\Categoria;
     use Exception;
 
     final class CategoriaConrtoller extends Controller

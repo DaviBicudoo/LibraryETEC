@@ -1,7 +1,7 @@
 <?php
     namespace LibraryETEC\Controller;
 
-    use PHPappMVCi\Model\Model;
+    use LibraryETEC\Model\Model;
 
     abstract class Controller
     {

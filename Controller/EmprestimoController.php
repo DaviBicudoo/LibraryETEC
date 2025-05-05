@@ -1,7 +1,7 @@
 <?php
     namespace LibraryETEC\Controller;
 
-    use PHPappMVCi\Model\{ Emprestimo, Aluno, Livro };
+    use LibraryETEC\Model\{ Emprestimo, Aluno, Livro };
     use Exception;
 
     final class EmprestimoController extends Controller

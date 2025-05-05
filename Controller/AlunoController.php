@@ -1,7 +1,7 @@
 <?php
     namespace LibraryETEC\Controller;
 
-    use PHPappMVCi\Model\Aluno;
+    use LibraryETEC\Model\Aluno;
     use Exception;
 
     final class AlunoConrtoller extends Controller

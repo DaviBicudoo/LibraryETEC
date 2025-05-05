@@ -1,7 +1,7 @@
 <?php
     namespace LibraryETEC\Controller;
 
-    use PHPappMVCi\Model\{ Livro, Categoria, Autor };
+    use LibraryETEC\Model\{ Livro, Categoria, Autor };
     use Exception;
 
     final class LivroConrtoller extends Controller
