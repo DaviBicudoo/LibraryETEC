@@ -18,14 +18,12 @@
 
         public function insert(Emprestimo $model) : Emprestimo
         {
-            $sql = "INSERT INTO emprestimo (id_usuario, id_aluno, emprestimo, devolucao) VALUES (?, ?, ?, ?) ";
+            $sql = "INSERT INTO aluno (data_emprestimo, data_devolucao) VALUES (?, ?) ";
 
             $stmt = parent::$conexao->prepare($sql);
 
-            $stmt->bindValue(1, $model->Id_Usuario);
-            $stmt->bindValue(2, $model->Id_Aluno);
-            $stmt->bindValue(3, $model->Emprestimo);
-            $stmt->bindValue(4, $model->Devolucao);
+            $stmt->bindValue(1, $model->Data_Emprestimo);
+            $stmt->bindValue(2, $model->Data_Devolucao);
             $stmt->execute();
 
             $model->Id = parent::$conexao->lastInsertId();
@@ -35,14 +33,12 @@
 
         public function update(Emprestimo $model) : Emprestimo
         {
-            $sql = "UPDATE emprestimo SET id_usuario=?, id_aluno=?, emprestimo=?, devolucao=? WHERE id=? ";
+            $sql = "UPDATE emprestimo SET data_emprestimo=?, data_devolucao=? WHERE id=? ";
 
             $stmt = parent::$conexao->prepare($sql);
-            $stmt->bindValue(1, $model->Id_Usuario);
-            $stmt->bindValue(2, $model->Id_Aluno);
-            $stmt->bindValue(3, $model->Emprestimo);
-            $stmt->bindValue(4, $model->Devolucao);
-            $stmt->bindValue(5, $model->Id);
+            $stmt->bindValue(1, $model->Data_Emprestimo);
+            $stmt->bindValue(2, $model->Data_Devolucao);
+            $stmt->bindValue(3, $model->Id);
             $stmt->execute();
 
             return $model;
@@ -53,28 +49,28 @@
             $sql = "SELECT * FROM emprestimo WHERE id=? ";
 
             $stmt = parent::$conexao->prepare($sql);
-            $stmt->bindValue(1, $model->Id);
+            $stmt->bindValue(1, $id);
             $stmt->execute();
 
-            return $stmt->fetchObject("PHPappMVCi\Model\Emprestimo");
+            return $stmt->fetchObject("LibraryETEC\Model\Emprestimo");
         }
 
-        public function select() : arid_alunoy
+        public function select() : array
         {
             $sql = "SELECT * FROM emprestimo ";
 
             $stmt = parent::$conexao->prepare($sql);
             $stmt->execute();
 
-            return $stmt->fetchAll(DAO::FETCH_CLASS, "PHPappMVCi\Model\Emprestimo");
+            return $stmt->fetchAll(DAO::FETCH_CLASS, "LibraryETEC\Model\Emprestimo");
         }
 
         public function delete(int $id) : bool
         {
-            $sql = "DELETE FROM emprestimos WHERE id=? ";
+            $sql = "DELETE FROM emprestimo WHERE id=? ";
 
             $stmt = parent::$conexao->prepare($sql);
-            $stmt->bindValue(1, $model->Id);
+            $stmt->bindValue(1, $id);
             return $stmt->execute();
         }
     }

@@ -36,11 +36,8 @@
                 if(parent::isPost())
                 {
                     $model->Id = !empty($_POST['id']) ? $_POST['id'] : null;
-                    $model->Id_Aluno = $_POST['id_aluno'];
-                    $model->Id_Livro = $_POST['id_Livro'];
-                    $model->Id_Usuario = LoginController::getUsuario()->Id;
-                    $model->Emprestimo = $_POST['emprestimo'];
-                    $model->Devolucao = $_POST['devolucao'];
+                    $model->Data_Devolucao = $_POST['data_devolucao'];
+                    $model->Data_Emprestimo = $_POST['data_emprestimo'];
                     $model->save();
 
                     parent::redirect("/emprestimo");
@@ -58,8 +55,8 @@
                 $model->setError($e->getMessage());
             }
 
-            $model->rows_alunos = new Aluno()->getAllRows;
-            $model->rows_livros = new Livro()->getAllRows;
+            // $model->rows = new Aluno()->getAllRows();
+            // $model->rows = new Livro()->getAllRows();
 
             parent::render('Emprestimo/form_emprestimo.php', $model);   
         }

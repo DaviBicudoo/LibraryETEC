@@ -51,10 +51,10 @@
             $sql = "SELECT * FROM aluno WHERE id=? ";
 
             $stmt = parent::$conexao->prepare($sql);
-            $stmt->bindValue(1, $model->Id);
+            $stmt->bindValue(1, $id);
             $stmt->execute();
 
-            return $stmt->fetchObject("PHPappMVCi\Model\Aluno");
+            return $stmt->fetchObject("LibraryETEC\Model\Aluno");
         }
 
         public function select() : array
@@ -64,7 +64,7 @@
             $stmt = parent::$conexao->prepare($sql);
             $stmt->execute();
 
-            return $stmt->fetchAll(DAO::FETCH_CLASS, "PHPappMVCi\Model\Aluno");
+            return $stmt->fetchAll(DAO::FETCH_CLASS, "LibraryETEC\Model\Aluno");
         }
 
         public function delete(int $id) : bool
@@ -72,7 +72,7 @@
             $sql = "DELETE FROM alunos WHERE id=? ";
 
             $stmt = parent::$conexao->prepare($sql);
-            $stmt->bindValue(1, $model->Id);
+            $stmt->bindValue(1, $id);
             return $stmt->execute();
         }
     }

@@ -4,7 +4,7 @@
     use LibraryETEC\Model\Autor;
     use Exception;
 
-    final class AutorConrtoller extends Controller
+    final class AutorController extends Controller
     {
         public static function index() : void
         {
@@ -37,7 +37,7 @@
                 {
                     $model->Id = !empty($_POST['id']) ? $_POST['id'] : null;
                     $model->Nome = $_POST['nome'];
-                    $model->Nascimento = $_POST['nascimento'];
+                    $model->Data_Nascimento = $_POST['nascimento'];
                     $model->CPF = $_POST['cpf'];
                     $model->save();
 

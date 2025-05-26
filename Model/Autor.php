@@ -1,7 +1,7 @@
 <?php
     namespace LibraryETEC\Model;
 
-    use LibraryETEC\DAO\AlunoDAO;
+    use LibraryETEC\DAO\AutorDAO;
     use Exception;
 
     final class Autor extends Model
@@ -52,12 +52,12 @@
             return new AutorDAO()->save($this);
         }
 
-        function getById(int $id) : ?Autor
+        function getById(int $id) : ?Aluno
         {
-            return new AutorDAO()->selectById($this);
+            return new AutorDAO()->selectById($id);
         }
 
-        function getAllRows() : array
+        function getAllRows() // : array
         {
             $this->rows = new AutorDAO()->select();
         }

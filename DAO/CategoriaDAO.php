@@ -47,10 +47,10 @@
             $sql = "SELECT * FROM categoria WHERE id=? ";
 
             $stmt = parent::$conexao->prepare($sql);
-            $stmt->bindValue(1, $model->Id);
+            $stmt->bindValue(1, $id);
             $stmt->execute();
 
-            return $stmt->fetchObject("PHPappMVCi\Model\Categoria");
+            return $stmt->fetchObject("LibraryETEC\Model\Categoria");
         }
 
         public function select() : array
@@ -60,7 +60,7 @@
             $stmt = parent::$conexao->prepare($sql);
             $stmt->execute();
 
-            return $stmt->fetchAll(DAO::FETCH_CLASS, "PHPappMVCi\Model\Categoria");
+            return $stmt->fetchAll(DAO::FETCH_CLASS, "LibraryETEC\Model\Categoria");
         }
 
         public function delete(int $id) : bool
@@ -68,7 +68,7 @@
             $sql = "DELETE FROM categorias WHERE id=? ";
 
             $stmt = parent::$conexao->prepare($sql);
-            $stmt->bindValue(1, $model->Id);
+            $stmt->bindValue(1, $id);
             return $stmt->execute();
         }
     }

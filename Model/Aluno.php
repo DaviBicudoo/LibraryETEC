@@ -54,10 +54,10 @@
 
         function getById(int $id) : ?Aluno
         {
-            return new AlunoDAO()->selectById($this);
+            return new AlunoDAO()->selectById($id);
         }
 
-        function getAllRows() : array
+        function getAllRows() 
         {
             $this->rows = new AlunoDAO()->select();
         }

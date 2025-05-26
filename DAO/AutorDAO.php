@@ -23,7 +23,7 @@
             $stmt = parent::$conexao->prepare($sql);
 
             $stmt->bindValue(1, $model->Nome);
-            $stmt->bindValue(2, $model->Nascimento);
+            $stmt->bindValue(2, $model->Data_Nascimento);
             $stmt->bindValue(3, $model->CPF);
             $stmt->execute();
 
@@ -38,7 +38,7 @@
 
             $stmt = parent::$conexao->prepare($sql);
             $stmt->bindValue(1, $model->Nome);
-            $stmt->bindValue(2, $model->Nascimento);
+            $stmt->bindValue(2, $model->Data_Nascimento);
             $stmt->bindValue(3, $model->CPF);
             $stmt->bindValue(4, $model->Id);
             $stmt->execute();
@@ -51,10 +51,10 @@
             $sql = "SELECT * FROM autor WHERE id=? ";
 
             $stmt = parent::$conexao->prepare($sql);
-            $stmt->bindValue(1, $model->Id);
+            $stmt->bindValue(1, $id);
             $stmt->execute();
 
-            return $stmt->fetchObject("PHPappMVCi\Model\Autor");
+            return $stmt->fetchObject("LibraryETEC\Model\Autor");
         }
 
         public function select() : array
@@ -64,7 +64,7 @@
             $stmt = parent::$conexao->prepare($sql);
             $stmt->execute();
 
-            return $stmt->fetchAll(DAO::FETCH_CLASS, "PHPappMVCi\Model\Autor");
+            return $stmt->fetchAll(DAO::FETCH_CLASS, "LibraryETEC\Model\Autor");
         }
 
         public function delete(int $id) : bool
@@ -72,7 +72,7 @@
             $sql = "DELETE FROM autors WHERE id=? ";
 
             $stmt = parent::$conexao->prepare($sql);
-            $stmt->bindValue(1, $model->Id);
+            $stmt->bindValue(1, $id);
             return $stmt->execute();
         }
     }

@@ -37,11 +37,10 @@
                 {
                     $model->Id = !empty($_POST['id']) ? $_POST['id'] : null;
                     $model->Titulo = $_POST['titulo'];
-                    $model->Id_Categoria = $_POST['id_categoria'];
                     $model->Isbn = $_POST['isbn'];
-                    $model->Ano = $_POST['ano'];
                     $model->Editora = $_POST['editora'];
-                    $model->Id_Autores = $_POST['autor'];
+                    $model->Ano = $_POST['ano'];
+
                     $model->save();
 
                     parent::redirect("/livro");
@@ -59,8 +58,8 @@
                 $model->setError($e->getMessage());
             }
 
-            $model->rows_categorias = new Categoria()->getAllRows();
-            $model->rows_autores = new Autor()->getAllRows();
+             // $model->rows_categorias = new Categoria()->getAllRows();
+            // $model->rows_autores = new Autor()->getAllRows();
 
             parent::render('Livro/form_livro.php', $model);   
         }

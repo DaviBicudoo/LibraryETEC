@@ -4,7 +4,7 @@
     use LibraryETEC\Model\Categoria;
     use Exception;
 
-    final class CategoriaConrtoller extends Controller
+    final class CategoriaController extends Controller
     {
         public static function index() : void
         {
