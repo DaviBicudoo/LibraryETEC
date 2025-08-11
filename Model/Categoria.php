@@ -1,49 +1,46 @@
 <?php
-    namespace LibraryETEC\Model;
 
-    use LibraryETEC\DAO\CategoriaDAO;
-    use Exception;
+namespace LibraryETEC\Model;
 
-    final class Categoria extends Model
+use LibraryETEC\DAO\CategoriaDAO;
+use Exception;
+
+final class Categoria extends Model
+{
+    public ?int $Id = null;
+
+    public ?string $Descricao
     {
-        public ?int $Id = null;
-
-        public ?string $Descricao
+        set
         {
-            set
-            {
-                if(strlen($value) < 10)
-                    throw new Exception("A descrição deve conter no mínimo 10 caracteres");
+            if(strlen($value) < 3)
+                throw new Exception("Descricao deve ter no mínimo 3 caracteres.");
 
-                    $this->$Descricao = $value;
-            }
-
-            get => $this->Descricao ?? null;
+            $this->Descricao = $value;
         }
 
-
-        // Não sei se está certo 
-        
-        function save() : Categoria
-        {
-            return new CategoriaDAO()->save($this);
-        }
-
-        function getById(int $id) : ?Aluno
-        {
-            return new CategoriaDAO()->selectById($id);
-        }
-
-        function getAllRows() // : array
-        {
-            $this->rows = new CategoriaDAO()->select();
-        }
-
-        function delete(int $id) : bool
-        {
-            return new CategoriaDAO()->delete($id);
-        }
-
+        get => $this->Descricao ?? null;
     }
 
-?>
+    function save() : Categoria
+    {
+        return new CategoriaDAO()->save($this);
+    }
+
+    function getById(int $id) : ?Categoria
+    {
+        return new CategoriaDAO()->selectById($id);
+    }
+
+    function getAllRows() : array
+    {
+        $this->rows = new CategoriaDAO()->select();
+
+        return $this->rows;
+    }
+
+    function delete(int $id) : bool
+    {
+        return new CategoriaDAO()->delete($id);
+    }
+}
