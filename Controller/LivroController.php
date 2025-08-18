@@ -1,87 +1,90 @@
 <?php
-    namespace LibraryETEC\Controller;
 
-    use LibraryETEC\Model\{ Livro, Categoria, Autor };
-    use Exception;
+namespace App\Controller;
 
-    final class LivroConrtoller extends Controller
+use App\Model\{ Categoria, Livro, Autor };
+use Exception;
+
+final class LivroController extends Controller
+{
+    public static function index() : void
     {
-        public static function index() : void
-        {
-            parent::isProtected();
+        parent::isProtected(); 
 
-            $model = new Livro();
+        $model = new Livro();
+        
+        try {
+            $model->getAllRows();
 
-            try
-            {
-                $model->getAllRows();
-            }
-            catch(Exception $e)
-            {
-                $model->setError("Ocorreu um erro ao buscar os livros:");
-                $model->setError($e->getMessage());
-            }
-
-            parent::render('Livro/lista_livro.php', $model);
+        } catch(Exception $e) {
+            $model->setError("Ocorreu um erro ao buscar os livros:");
+            $model->setError($e->getMessage());
         }
 
-        public static function cadasrto() : void
+        parent::render('Livro/lista_livro.php', $model); 
+    } 
+
+    public static function cadastro() : void
+    {
+        parent::isProtected(); 
+
+        $model = new Livro();
+
+        echo "Estou onde quero";
+
+        var_dump($model->Id_Autores);
+        
+        try
         {
-            parent::isProtected();
-
-            $model = new Livro();
-
-            try
+            if(parent::isPost())
             {
-                if(parent::isPost())
-                {
-                    $model->Id = !empty($_POST['id']) ? $_POST['id'] : null;
-                    $model->Titulo = $_POST['titulo'];
-                    $model->Isbn = $_POST['isbn'];
-                    $model->Editora = $_POST['editora'];
-                    $model->Ano = $_POST['ano'];
+                $model->Id = !empty($_POST['id']) ? $_POST['id'] : null;
+                $model->Titulo = $_POST['titulo'];
+                $model->Id_Categoria = $_POST['id_categoria'];
+                $model->Isbn = $_POST['isbn'];
+                $model->Ano = $_POST['ano'];
+                $model->Editora = $_POST['editora'];
+                $model->Id_Autores = $_POST['autor'];
+                $model->save();
 
-                    $model->save();
-
-                    parent::redirect("/livro");
-                }
-                else
-                {
-                    if(isset($_GET['id']))
-                    {
-                        $model = $model->getById( (int) $_GET['id']);
-                    }
-                }
-            }
-            catch(Exception $e)
-            {
-                $model->setError($e->getMessage());
-            }
-
-             // $model->rows_categorias = new Categoria()->getAllRows();
-            // $model->rows_autores = new Autor()->getAllRows();
-
-            parent::render('Livro/form_livro.php', $model);   
-        }
-
-        public static function delete() : void
-        {
-            parent::isProtected();
-
-            $model = new Livro();
-
-            try
-            {
-                $model->delete( (int) $_GET['id']);
                 parent::redirect("/livro");
-            }
-            catch (Exception $e)
-            {
-                $model->setError("Ocorreu um erro ao excluir o livro:");
-                $model->setError($e->getMessage());
+
+            } else {
+    
+                if(isset($_GET['id']))
+                {              
+                    $model = $model->getById( (int) $_GET['id'] );
+                }
             }
 
-            parent::render('Livro/form_livro.php', $model);   
+        } catch(Exception $e) {
+
+            $model->setError($e->getMessage());
         }
+
+        $model->rows_categorias = new Categoria()->getAllRows();
+
+        $model->rows_autores = new Autor()->getAllRows();
+
+        parent::render('Livro/form_livro.php', $model);        
+    } 
+    
+    public static function delete() : void
+    {
+        parent::isProtected(); 
+
+        $model = new Livro();
+        
+        try 
+        {
+            $model->delete( (int) $_GET['id']);
+            parent::redirect("/livro");
+
+        } catch(Exception $e) {
+            $model->setError("Ocorreu um erro ao excluir o livro:");
+            $model->setError($e->getMessage());
+        } 
+        
+        parent::render('Livro/lista_livro.php', $model);  
     }
-?>
+}

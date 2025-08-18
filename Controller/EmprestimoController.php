@@ -1,84 +1,84 @@
 <?php
-    namespace LibraryETEC\Controller;
 
-    use LibraryETEC\Model\{ Emprestimo, Aluno, Livro };
-    use Exception;
+namespace App\Controller;
 
-    final class EmprestimoController extends Controller
+use App\Model\{ Emprestimo, Aluno, Livro };
+use Exception;
+
+final class EmprestimoController extends Controller
+{
+    public static function index() : void
     {
-        public static function index() : void
-        {
-            parent::isProtected();
+        parent::isProtected(); 
 
-            $model = new Emprestimo();
+        $model = new Emprestimo();
+        
+        try {
+            $model->getAllRows();
 
-            try
-            {
-                $model->getAllRows();
-            }
-            catch(Exception $e)
-            {
-                $model->setError("Ocorreu um erro ao buscar os empréstimos:");
-                $model->setError($e->getMessage());
-            }
-
-            parent::render('Emprestimo/lista_emprestimo.php', $model);
+        } catch(Exception $e) {
+            $model->setError("Ocorreu um erro ao buscar os emprestimos:");
+            $model->setError($e->getMessage());
         }
 
-        public static function cadasrto() : void
+        parent::render('Emprestimo/lista_emprestimo.php', $model); 
+    } 
+
+    public static function cadastro() : void
+    {
+        parent::isProtected(); 
+
+        $model = new Emprestimo();
+        
+        try
         {
-            parent::isProtected();
-
-            $model = new Emprestimo();
-
-            try
+            if(parent::isPost())
             {
-                if(parent::isPost())
-                {
-                    $model->Id = !empty($_POST['id']) ? $_POST['id'] : null;
-                    $model->Data_Devolucao = $_POST['data_devolucao'];
-                    $model->Data_Emprestimo = $_POST['data_emprestimo'];
-                    $model->save();
+                $model->Id = !empty($_POST['id']) ? $_POST['id'] : null;
+                $model->Id_Aluno = $_POST['id_aluno'];
+                $model->Id_Livro = $_POST['id_livro'];
+                $model->Id_Usuario = LoginController::getUsuario()->Id;
+                $model->Data_Emprestimo = $_POST['data_emprestimo'];
+                $model->Data_Devolucao = $_POST['data_devolucao'];           
+                $model->save();
 
-                    parent::redirect("/emprestimo");
-                }
-                else
-                {
-                    if(isset($_GET['id']))
-                    {
-                        $model = $model->getById( (int) $_GET['id']);
-                    }
-                }
-            }
-            catch(Exception $e)
-            {
-                $model->setError($e->getMessage());
-            }
-
-            // $model->rows = new Aluno()->getAllRows();
-            // $model->rows = new Livro()->getAllRows();
-
-            parent::render('Emprestimo/form_emprestimo.php', $model);   
-        }
-
-        public static function delete() : void
-        {
-            parent::isProtected();
-
-            $model = new Emprestimo();
-
-            try
-            {
-                $model->delete( (int) $_GET['id']);
                 parent::redirect("/emprestimo");
-            }
-            catch (Exception $e)
-            {
-                $model->setError("Ocorreu um erro ao excluir o empréstimo:");
-                $model->setError($e->getMessage());
+
+            } else {
+    
+                if(isset($_GET['id']))
+                {              
+                    $model = $model->getById( (int) $_GET['id'] );
+                }
             }
 
-            parent::render('Emprestimo/form_emprestimo.php', $model);   
+        } catch(Exception $e) {
+
+            $model->setError($e->getMessage());
         }
+
+        $model->rows_alunos = new Aluno()->getAllRows();
+        $model->rows_livros = new Livro()->getAllRows();
+
+        parent::render('Emprestimo/form_emprestimo.php', $model);        
+    } 
+    
+    public static function delete() : void
+    {
+        parent::isProtected(); 
+
+        $model = new Emprestimo();
+        
+        try 
+        {
+            $model->delete( (int) $_GET['id']);
+            parent::redirect("/emprestimo");
+
+        } catch(Exception $e) {
+            $model->setError("Ocorreu um erro ao excluir o emprestimo:");
+            $model->setError($e->getMessage());
+        } 
+        
+        parent::render('Emprestimo/lista_emprestimo.php', $model);  
     }
-?>
+}
