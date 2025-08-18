@@ -1,80 +1,77 @@
 <?php
-    namespace LibraryETEC\Controller;
 
-    use LibraryETEC\Model\Categoria;
-    use Exception;
+namespace App\Controller;
 
-    final class CategoriaController extends Controller
+use App\Model\Categoria;
+use Exception;
+
+final class CategoriaController extends Controller
+{
+    public static function index() : void
     {
-        public static function index() : void
-        {
-            parent::isProtected();
+        parent::isProtected(); 
 
-            $model = new Categoria();
+        $model = new Categoria();
+        
+        try {
+            $model->getAllRows();
 
-            try
-            {
-                $model->getAllRows();
-            }
-            catch(Exception $e)
-            {
-                $model->setError("Ocorreu um erro ao buscar os categorias:");
-                $model->setError($e->getMessage());
-            }
-
-            parent::render('Categoria/lista_categoria.php', $model);
+        } catch(Exception $e) {
+            $model->setError("Ocorreu um erro ao buscar as categorias:");
+            $model->setError($e->getMessage());
         }
 
-        public static function cadasrto() : void
+        parent::render('Categoria/lista_categoria.php', $model); 
+    } 
+
+    public static function cadastro() : void
+    {
+        parent::isProtected(); 
+
+        $model = new Categoria();
+        
+        try
         {
-            parent::isProtected();
-
-            $model = new Categoria();
-
-            try
+            if(parent::isPost())
             {
-                if(parent::isPost())
-                {
-                    $model->Id = !empty($_POST['id']) ? $_POST['id'] : null;
-                    $model->Descricao = $_POST['descricao'];
-                    $model->save();
+                $model->Id = !empty($_POST['id']) ? $_POST['id'] : null;
+                $model->Descricao = $_POST['descricao'];
+                $model->save();
 
-                    parent::redirect("/categoria");
-                }
-                else
-                {
-                    if(isset($_GET['id']))
-                    {
-                        $model = $model->getById( (int) $_GET['id']);
-                    }
-                }
-            }
-            catch(Exception $e)
-            {
-                $model->setError($e->getMessage());
-            }
-
-            parent::render('Categoria/form_categoria.php', $model);   
-        }
-
-        public static function delete() : void
-        {
-            parent::isProtected();
-
-            $model = new Categoria();
-
-            try
-            {
-                $model->delete( (int) $_GET['id']);
                 parent::redirect("/categoria");
-            }
-            catch (Exception $e)
-            {
-                $model->setError("Ocorreu um erro ao excluir o categoria:");
-                $model->setError($e->getMessage());
+
+            } else {
+    
+                if(isset($_GET['id']))
+                {              
+                    $model = $model->getById( (int) $_GET['id'] );
+                }
             }
 
-            parent::render('Categoria/form_categoria.php', $model);   
+        } catch(Exception $e) {
+
+            $model->setError($e->getMessage());
         }
+
+        parent::render('Categoria/form_categoria.php', $model);        
+    } 
+    
+    public static function delete() : void
+    {
+        parent::isProtected(); 
+
+        $model = new Categoria();
+        
+        try 
+        {
+            $model->delete( (int) $_GET['id']);
+            parent::redirect("/categoria");
+
+        } catch(Exception $e) {
+            $model->setError("Ocorreu um erro ao excluir a categoria:");
+            $model->setError($e->getMessage());
+        } 
+        
+        parent::render('Categoria/lista_categoria.php', $model);  
     }
-?>
+}
