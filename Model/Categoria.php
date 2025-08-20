@@ -1,8 +1,8 @@
 <?php
 
-namespace LibraryETEC\Model;
+namespace App\Model;
 
-use LibraryETEC\DAO\CategoriaDAO;
+use App\DAO\CategoriaDAO;
 use Exception;
 
 final class Categoria extends Model

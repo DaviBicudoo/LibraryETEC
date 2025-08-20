@@ -1,6 +1,6 @@
 <?php
 
-namespace LibraryETEC\Model;
+namespace App\Model;
 
 abstract class Model
 {

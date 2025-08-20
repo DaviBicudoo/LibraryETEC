@@ -1,8 +1,8 @@
 <?php
 
-namespace LibraryETEC\Model;
+namespace App\Model;
 
-use LibraryETEC\DAO\AutorDAO;
+use App\DAO\AutorDAO;
 use Exception;
 
 final class Autor extends Model

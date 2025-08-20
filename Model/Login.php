@@ -1,8 +1,8 @@
 <?php
 
-namespace LibraryETEC\Model;
+namespace App\Model;
 
-use LibraryETEC\DAO\LoginDAO;
+use App\DAO\LoginDAO;
 
 final class Login
 {

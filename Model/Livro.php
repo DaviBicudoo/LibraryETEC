@@ -1,8 +1,8 @@
 <?php
 
-namespace LibraryETEC\Model;
+namespace App\Model;
 
-use LibraryETEC\DAO\LivroDAO;
+use App\DAO\LivroDAO;
 use Exception;
 
 final class Livro extends Model
